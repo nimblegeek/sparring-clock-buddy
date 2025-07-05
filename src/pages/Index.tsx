@@ -88,8 +88,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Mobile/Tablet Layout */}
-      <div className="lg:hidden">
+      {/* Mobile Layout (< md) */}
+      <div className="md:hidden">
         <div className="p-4 pb-safe">
           {/* Header with Settings */}
           <div className="flex justify-between items-center mb-6">
@@ -174,80 +174,165 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Desktop/TV Layout */}
-      <div className="hidden lg:block p-4 xl:p-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800 mb-2">
-              Martial Arts Timer
-            </h1>
-            <p className="text-gray-600 text-lg xl:text-xl 2xl:text-2xl">
-              Professional sparring timer for your training sessions
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {/* Timer Display - Takes up more space on large screens */}
-            <div className="lg:col-span-2 xl:col-span-3">
-              <div className="bg-white p-8 xl:p-12 2xl:p-16 rounded-2xl shadow-lg border border-gray-200">
-                <TimerDisplay
-                  minutes={minutes}
-                  seconds={seconds}
-                  isActive={isActive}
-                  isResting={isResting}
-                  currentRound={currentRound}
-                  totalRounds={totalRounds}
-                />
-                
-                {/* Completion Message */}
-                {isCompleted && (
-                  <div className="text-center mb-6">
-                    <div className="text-3xl xl:text-4xl 2xl:text-5xl font-bold text-green-600 mb-2">
-                      Training Complete! 🥊
-                    </div>
-                    <p className="text-gray-600 xl:text-lg 2xl:text-xl">
-                      Great job! You completed all {totalRounds} rounds.
-                    </p>
-                  </div>
-                )}
-                
-                <TimerControls
-                  isActive={isActive}
-                  onStart={start}
-                  onPause={pause}
-                  onReset={reset}
-                />
-              </div>
+      {/* Desktop Layout (md - xl) */}
+      <div className="hidden md:block xl:hidden">
+        <div className="p-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
+                Martial Arts Timer
+              </h1>
+              <p className="text-gray-600 text-lg">
+                Professional sparring timer for your training sessions
+              </p>
             </div>
 
-            {/* Settings Panel */}
-            <div className="lg:col-span-1 xl:col-span-1">
-              <TimerSettings
-                roundMinutes={roundMinutes}
-                roundSeconds={roundSeconds}
-                restMinutes={restMinutes}
-                restSeconds={restSeconds}
-                totalRounds={totalRounds}
-                onRoundTimeChange={handleRoundTimeChange}
-                onRestTimeChange={handleRestTimeChange}
-                onTotalRoundsChange={handleTotalRoundsChange}
-              />
-              
-              {/* Quick Presets */}
-              <div className="mt-6 bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                <h3 className="text-xl xl:text-2xl font-bold text-gray-800 mb-4 text-center">Quick Presets</h3>
-                <div className="space-y-3">
-                  {presets.map((preset, index) => (
-                    <button
-                      key={index}
-                      onClick={() => applyPreset(preset)}
-                      className="w-full p-3 xl:p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                      <div className="font-semibold xl:text-lg">{preset.name}</div>
-                      <div className="text-sm xl:text-base text-gray-600">{preset.description}</div>
-                    </button>
-                  ))}
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Timer Display - Takes up 2 columns */}
+              <div className="md:col-span-2">
+                <div className="bg-white p-6 lg:p-8 rounded-2xl shadow-lg border border-gray-200">
+                  <TimerDisplay
+                    minutes={minutes}
+                    seconds={seconds}
+                    isActive={isActive}
+                    isResting={isResting}
+                    currentRound={currentRound}
+                    totalRounds={totalRounds}
+                  />
+                  
+                  {/* Completion Message */}
+                  {isCompleted && (
+                    <div className="text-center mb-6">
+                      <div className="text-2xl lg:text-3xl font-bold text-green-600 mb-2">
+                        Training Complete! 🥊
+                      </div>
+                      <p className="text-gray-600 text-lg">
+                        Great job! You completed all {totalRounds} rounds.
+                      </p>
+                    </div>
+                  )}
+                  
+                  <TimerControls
+                    isActive={isActive}
+                    onStart={start}
+                    onPause={pause}
+                    onReset={reset}
+                  />
+                </div>
+              </div>
+
+              {/* Settings Panel */}
+              <div className="md:col-span-1">
+                <TimerSettings
+                  roundMinutes={roundMinutes}
+                  roundSeconds={roundSeconds}
+                  restMinutes={restMinutes}
+                  restSeconds={restSeconds}
+                  totalRounds={totalRounds}
+                  onRoundTimeChange={handleRoundTimeChange}
+                  onRestTimeChange={handleRestTimeChange}
+                  onTotalRoundsChange={handleTotalRoundsChange}
+                />
+                
+                {/* Quick Presets */}
+                <div className="mt-6 bg-white p-4 rounded-2xl shadow-lg border border-gray-200">
+                  <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">Quick Presets</h3>
+                  <div className="space-y-2">
+                    {presets.map((preset, index) => (
+                      <button
+                        key={index}
+                        onClick={() => applyPreset(preset)}
+                        className="w-full p-3 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <div className="font-semibold text-sm">{preset.name}</div>
+                        <div className="text-xs text-gray-600">{preset.description}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Large Screen/TV Layout (xl+) */}
+      <div className="hidden xl:block">
+        <div className="p-8 2xl:p-12">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <h1 className="text-5xl 2xl:text-7xl font-bold text-gray-800 mb-4">
+                Martial Arts Timer
+              </h1>
+              <p className="text-gray-600 text-xl 2xl:text-2xl">
+                Professional sparring timer for your training sessions
+              </p>
+            </div>
+
+            <div className="grid xl:grid-cols-4 gap-8">
+              {/* Timer Display - Takes up 3 columns */}
+              <div className="xl:col-span-3">
+                <div className="bg-white p-12 2xl:p-16 rounded-3xl shadow-lg border border-gray-200">
+                  <TimerDisplay
+                    minutes={minutes}
+                    seconds={seconds}
+                    isActive={isActive}
+                    isResting={isResting}
+                    currentRound={currentRound}
+                    totalRounds={totalRounds}
+                  />
+                  
+                  {/* Completion Message */}
+                  {isCompleted && (
+                    <div className="text-center mb-8">
+                      <div className="text-4xl 2xl:text-6xl font-bold text-green-600 mb-4">
+                        Training Complete! 🥊
+                      </div>
+                      <p className="text-gray-600 text-xl 2xl:text-2xl">
+                        Great job! You completed all {totalRounds} rounds.
+                      </p>
+                    </div>
+                  )}
+                  
+                  <TimerControls
+                    isActive={isActive}
+                    onStart={start}
+                    onPause={pause}
+                    onReset={reset}
+                  />
+                </div>
+              </div>
+
+              {/* Settings Panel */}
+              <div className="xl:col-span-1">
+                <TimerSettings
+                  roundMinutes={roundMinutes}
+                  roundSeconds={roundSeconds}
+                  restMinutes={restMinutes}
+                  restSeconds={restSeconds}
+                  totalRounds={totalRounds}
+                  onRoundTimeChange={handleRoundTimeChange}
+                  onRestTimeChange={handleRestTimeChange}
+                  onTotalRoundsChange={handleTotalRoundsChange}
+                />
+                
+                {/* Quick Presets */}
+                <div className="mt-8 bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+                  <h3 className="text-xl 2xl:text-2xl font-bold text-gray-800 mb-6 text-center">Quick Presets</h3>
+                  <div className="space-y-3">
+                    {presets.map((preset, index) => (
+                      <button
+                        key={index}
+                        onClick={() => applyPreset(preset)}
+                        className="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <div className="font-semibold text-lg">{preset.name}</div>
+                        <div className="text-sm text-gray-600">{preset.description}</div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
